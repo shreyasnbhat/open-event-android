@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import org.fossasia.openevent.R;
 import org.fossasia.openevent.activities.SessionDetailActivity;
@@ -39,6 +42,7 @@ public class DayScheduleAdapter extends BaseRVAdapter<Session, DayScheduleAdapte
 
     private Context context;
     private String eventDate;
+    private ColorGenerator gen = ColorGenerator.MATERIAL;
 
     private CompositeDisposable disposable;
 
@@ -104,6 +108,7 @@ public class DayScheduleAdapter extends BaseRVAdapter<Session, DayScheduleAdapte
             }
         }
         holder.slotLocation.setText(currentSession.getMicrolocation().getName());
+        holder.l.setBackgroundColor(gen.getColor(currentSession.getTrack().getName()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +207,9 @@ public class DayScheduleAdapter extends BaseRVAdapter<Session, DayScheduleAdapte
 
         @BindView(R.id.slot_location)
         TextView slotLocation;
+
+        @BindView(R.id.content_frame)
+        RelativeLayout l;
 
 
         DayScheduleViewHolder(View itemView) {

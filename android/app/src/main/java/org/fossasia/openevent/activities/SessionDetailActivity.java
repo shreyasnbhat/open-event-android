@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
@@ -22,6 +23,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +46,7 @@ import org.fossasia.openevent.utils.WidgetUpdater;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,6 +110,7 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
 
     private String trackName, title;
 
+
     private Spanned result;
 
     private boolean isHideToolbarView = false;
@@ -130,6 +134,7 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
         trackName = getIntent().getStringExtra(ConstantStrings.TRACK);
         id = getIntent().getIntExtra(ConstantStrings.ID, 0);
         Timber.tag(TAG).d(title);
+
 
         appBarLayout.addOnOffsetChangedListener(this);
 
@@ -239,21 +244,13 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                     disposable.add(dbSingleton.deleteBookmarksObservable(session.getId()).subscribe());
 
                     fabSessionBookmark.setImageResource(R.drawable.ic_bookmark_outline_white_24dp);
-                    Snackbar.make(speakersRecyclerView, R.string.removed_bookmark, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.undo, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    disposable.add(dbSingleton.addBookmarksObservable(session.getId()).subscribe());
-                                    fabSessionBookmark.setImageResource(R.drawable.ic_bookmark_white_24dp);
-                                    WidgetUpdater.updateWidget(getApplicationContext());
-                                }
-                            }).show();
+                    Snackbar.make(speakersRecyclerView, R.string.removed_bookmark, Snackbar.LENGTH_SHORT).show();
                 } else {
                     Timber.tag(TAG).d("Bookmarked");
                     disposable.add(dbSingleton.addBookmarksObservable(session.getId()).subscribe());
                     fabSessionBookmark.setImageResource(R.drawable.ic_bookmark_white_24dp);
                     createNotification();
-                    Toast.makeText(SessionDetailActivity.this, R.string.added_bookmark, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(speakersRecyclerView, R.string.added_bookmark, Snackbar.LENGTH_SHORT).show();
                 }
             }
         };

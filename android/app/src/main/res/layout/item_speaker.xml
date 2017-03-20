@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:alpha="0.8"
-        android:background="?colorPrimaryDark"
+        android:background="#70414141"
         android:orientation="vertical"
         android:padding="@dimen/padding_extra_small">
 
