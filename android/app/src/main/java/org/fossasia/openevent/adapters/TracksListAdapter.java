@@ -1,30 +1,22 @@
 package org.fossasia.openevent.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import org.fossasia.openevent.R;
-import org.fossasia.openevent.activities.TrackSessionsActivity;
 import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
-import org.fossasia.openevent.utils.ConstantStrings;
+import org.fossasia.openevent.adapters.viewholders.TrackViewHolder;
 import org.fossasia.openevent.views.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.realm.Realm;
 import timber.log.Timber;
 
@@ -32,10 +24,9 @@ import timber.log.Timber;
  * User: MananWason
  * Date: 07-06-2015
  */
-public class TracksListAdapter extends BaseRVAdapter<Track, TracksListAdapter.RecyclerViewHolder> implements StickyRecyclerHeadersAdapter {
+public class TracksListAdapter extends BaseRVAdapter<Track, TrackViewHolder> implements StickyRecyclerHeadersAdapter {
 
     private Context context;
-    private TextDrawable.IBuilder drawableBuilder = TextDrawable.builder().round();
 
     @SuppressWarnings("all")
     private Filter filter = new Filter() {
@@ -76,30 +67,25 @@ public class TracksListAdapter extends BaseRVAdapter<Track, TracksListAdapter.Re
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_track, parent, false);
-        return new RecyclerViewHolder(view);
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        final Track currentTrack = getItem(position);
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
 
-        holder.trackTitle.setText(currentTrack.getName());
+    @Override
+    public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.item_track, parent, false);
+        return new TrackViewHolder(view,context);
+    }
 
-        int trackColor = Color.parseColor(currentTrack.getColor());
-        TextDrawable drawable = drawableBuilder.build(String.valueOf(currentTrack.getName().charAt(0)), trackColor);
-        holder.trackImageIcon.setImageDrawable(drawable);
-        holder.trackImageIcon.setBackgroundColor(Color.TRANSPARENT);
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TrackSessionsActivity.class);
-            intent.putExtra(ConstantStrings.TRACK, currentTrack.getName());
-
-            intent.putExtra(ConstantStrings.TRACK_ID, currentTrack.getId());
-            context.startActivity(intent);
-        });
+    @Override
+    public void onBindViewHolder(TrackViewHolder holder, int position) {
+        holder.bindTrack(getItem(position));
     }
 
     @Override
@@ -125,18 +111,4 @@ public class TracksListAdapter extends BaseRVAdapter<Track, TracksListAdapter.Re
         textView.setText(String.valueOf(getItem(position).getName().charAt(0)));
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.imageView)
-        ImageView trackImageIcon;
-
-        @BindView(R.id.track_title)
-        TextView trackTitle;
-
-        RecyclerViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-    }
 }

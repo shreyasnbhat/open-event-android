@@ -3,13 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_bookmarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium"
+            android:scrollbars="horizontal"
+            tools:listitem="@layout/tracksactvity_item">
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/carddemo"
@@ -45,7 +56,7 @@
                         android:layout_weight="0.7"
                         android:padding="@dimen/padding_medium"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -68,7 +79,7 @@
                     android:paddingLeft="@dimen/padding_medium"
                     android:paddingRight="@dimen/padding_medium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_medium"
+                    android:textSize="@dimen/text_size_large"
                     android:visibility="gone" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -79,7 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_medium"
             android:layout_marginRight="@dimen/padding_medium"
-            android:layout_marginTop="@dimen/padding_medium">
+            android:layout_marginTop="@dimen/padding_medium"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,19 +100,15 @@
 
                 <TextView
                     android:id="@+id/event_timing"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_medium"
                     android:text="@string/event_open"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@color/primary_text"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.8dp"
-                    android:layout_marginTop="1dp"
-                    android:background="?android:attr/listDivider" />
+                    />
 
                 <TextView
                     android:id="@+id/event_timing_details"
@@ -108,7 +116,8 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_medium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_large" />
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -118,7 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_medium"
             android:layout_marginRight="@dimen/padding_medium"
-            android:layout_marginTop="@dimen/padding_medium">
+            android:layout_marginTop="@dimen/padding_medium"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,19 +137,15 @@
 
                 <TextView
                     android:id="@+id/event_venue"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_medium"
                     android:text="@string/event_venue"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@color/primary_text"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.8dp"
-                    android:layout_marginTop="1dp"
-                    android:background="?android:attr/listDivider" />
+                    />
 
                 <TextView
                     android:id="@+id/event_venue_details"
@@ -147,7 +153,8 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_medium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_large" />
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -157,7 +164,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_medium"
             android:layout_marginRight="@dimen/padding_medium"
-            android:layout_marginTop="@dimen/padding_medium">
+            android:layout_marginTop="@dimen/padding_medium"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -166,20 +174,15 @@
 
                 <TextView
                     android:id="@+id/organiser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="@dimen/padding_medium"
-                    android:text="@string/organiser_description"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.8dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    android:textStyle="bold"
+                    android:text="@string/organiser_description"
+                    android:textColor="@color/white"
+                    android:background="@color/primary_text"
+                    android:textSize="18sp"
+                    />
 
                 <TextView
                     android:id="@+id/organiser_description"
@@ -189,7 +192,7 @@
                     android:maxLines="4"
                     android:padding="@dimen/padding_medium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_large" />
 
                 <TextView
                     android:id="@+id/readmore"
@@ -199,7 +202,9 @@
                     android:layout_marginBottom="@dimen/padding_medium"
                     android:clickable="true"
                     android:text="@string/read_more"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_medium"
                     android:textColor="#0066FF" />
 
                 <TextView
@@ -210,7 +215,9 @@
                     android:layout_marginBottom="@dimen/padding_medium"
                     android:clickable="true"
                     android:text="@string/read_less"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_medium"
                     android:textColor="#0066FF"
                     android:visibility="gone" />
             </LinearLayout>
@@ -222,7 +229,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_medium"
             android:layout_marginRight="@dimen/padding_medium"
-            android:layout_marginTop="@dimen/padding_medium">
+            android:layout_marginTop="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/padding_medium"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,20 +240,15 @@
 
                 <TextView
                     android:id="@+id/socialLinks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="@dimen/padding_medium"
-                    android:text="@string/social_links"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.8dp"
-                    android:layout_marginTop="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    android:textStyle="bold"
+                    android:text="@string/social_links"
+                    android:textColor="@color/white"
+                    android:background="@color/primary_text"
+                    android:textSize="@dimen/text_size_extra_large"
+                    />
 
                 <LinearLayout
                     android:id="@+id/images"
@@ -296,15 +300,5 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-        <TextView
-            android:id="@+id/url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/padding_medium"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

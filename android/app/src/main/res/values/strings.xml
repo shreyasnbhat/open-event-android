@@ -72,6 +72,7 @@
 
 
     <!--Search Titles-->
+    <string name="global_search_hint">Search App</string>
     <string name="search_hint_tracks"> Search Tracks</string>
     <string name="refresh_failed">Couldn\'t Refresh</string>
     <string name="download_failed">Download Failed</string>
