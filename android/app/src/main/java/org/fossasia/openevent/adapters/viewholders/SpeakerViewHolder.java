@@ -12,14 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import org.fossasia.openevent.R;
 import org.fossasia.openevent.activities.SpeakerDetailsActivity;
 import org.fossasia.openevent.data.Speaker;
+import org.fossasia.openevent.utils.CircleTransform;
 import org.fossasia.openevent.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,6 +40,8 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
     private Speaker speaker;
     private Context context;
+
+    private boolean isImageCircle = true;
 
     public SpeakerViewHolder(View itemView, Context context) {
         super(itemView);
@@ -57,31 +62,44 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
         this.speaker = speaker;
 
         String thumbnail = Utils.parseImageUri(this.speaker.getThumbnail());
+
         if (thumbnail == null)
             thumbnail = Utils.parseImageUri(this.speaker.getPhoto());
 
         Drawable placeholder = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_account_circle_grey_24dp, null);
 
         if(thumbnail != null) {
-            Picasso.with(speakerImage.getContext())
+            RequestCreator requestCreator = Picasso.with(speakerImage.getContext())
                     .load(Uri.parse(thumbnail))
-                    .placeholder(placeholder)
-                    .into(speakerImage);
+                    .placeholder(placeholder);
+
+            if (isImageCircle) {
+                requestCreator.transform(new CircleTransform());
+            }
+
+            requestCreator.into(speakerImage);
         } else {
             speakerImage.setImageDrawable(placeholder);
         }
 
-        String name = this.speaker.getName();
-        name = TextUtils.isEmpty(name) ? "" : name;
+        setStringField(speakerName, speaker.getName());
+        setStringField(speakerDesignation, String.format("%s %s", speaker.getPosition(), speaker.getOrganisation()));
+        setStringField(speakerCountry, speaker.getCountry());
+    }
 
-        String positionString = this.speaker.getPosition();
-        positionString = TextUtils.isEmpty(positionString) ? "" : positionString;
+    private void setStringField(TextView textView, String field) {
+        if (textView == null)
+            return;
 
-        String country = this.speaker.getCountry();
-        country = TextUtils.isEmpty(country) ? "" : country;
+        if (!TextUtils.isEmpty(field.trim())) {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(field);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+    }
 
-        speakerName.setText(name);
-        speakerDesignation.setText(String.format(positionString, this.speaker.getOrganisation()));
-        speakerCountry.setText(country);
+    public void setIsImageCircle(boolean imageCircle) {
+        isImageCircle = imageCircle;
     }
 }
