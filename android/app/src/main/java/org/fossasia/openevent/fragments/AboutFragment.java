@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -35,8 +36,10 @@ import org.fossasia.openevent.utils.ISO8601Date;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
+import io.reactivex.disposables.CompositeDisposable;
 import io.realm.RealmResults;
 import timber.log.Timber;
 
@@ -47,31 +50,33 @@ import timber.log.Timber;
 public class AboutFragment extends BaseFragment {
 
     @BindView(R.id.welcomeMessage)
-    protected TextView welcomeMessage;
-    @BindView(R.id.event_description)
-    protected TextView event_descrption;
+    TextView welcomeMessage;
+    @BindView(R.id.event_descrption)
+    TextView event_descrption;
     @BindView(R.id.event_timing_details)
-    protected TextView event_timing;
+    TextView event_timing;
     @BindView(R.id.organiser_description)
-    protected TextView organiser_description;
+    TextView organiser_description;
+    @BindView(R.id.carddemo)
+    CardView cardView;
     @BindView(R.id.item_description_img)
-    protected ImageView mDescriptionImg;
+    ImageView mDescriptionImg;
     @BindView(R.id.readmore)
-    protected TextView readMore;
+    TextView readMore;
     @BindView(R.id.readless)
-    protected TextView readLess;
+    TextView readLess;
     @BindView(R.id.img_twitter)
-    protected ImageView img_twitter;
+    ImageView img_twitter;
     @BindView(R.id.img_facebook)
-    protected ImageView img_facebook;
+    ImageView img_facebook;
     @BindView(R.id.img_github)
-    protected ImageView img_github;
+    ImageView img_github;
     @BindView(R.id.img_linkedin)
-    protected ImageView img_linkedin;
+    ImageView img_linkedin;
     @BindView(R.id.event_venue_details)
-    protected TextView venue_details;
+    TextView venue_details;
     @BindView(R.id.list_bookmarks)
-    protected RecyclerView bookmarksRecyclerView;
+    RecyclerView bookmarksRecyclerView;
 
     final private String SEARCH = "org.fossasia.openevent.searchText";
 
@@ -208,6 +213,18 @@ public class AboutFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         loadData();
+    }
+
+    private List<Session> filter(List<Session> sessions, String query) {
+        String lowerCaseQuery = query.toLowerCase(Locale.getDefault());
+        final List<Session> filteredTracksList = new ArrayList<>();
+        for (Session session : sessions) {
+            final String text = session.getTitle().toLowerCase(Locale.getDefault());
+            if (text.contains(lowerCaseQuery)) {
+                filteredTracksList.add(session);
+            }
+        }
+        return filteredTracksList;
     }
 
     private void handleVisibility() {

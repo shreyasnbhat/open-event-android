@@ -86,10 +86,7 @@ public class SpeakersListAdapter extends BaseRVAdapter<Speaker, SpeakerViewHolde
     public SpeakerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_speaker, parent, false);
-        SpeakerViewHolder speakerViewHolder = new SpeakerViewHolder(view, parent.getContext());
-        speakerViewHolder.setIsImageCircle(false);
-
-        return speakerViewHolder;
+        return new SpeakerViewHolder(view,context);
     }
 
     @Override
