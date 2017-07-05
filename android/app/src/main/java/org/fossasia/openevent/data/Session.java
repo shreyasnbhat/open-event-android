@@ -1,12 +1,18 @@
 package org.fossasia.openevent.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.github.jasminb.jsonapi.IntegerIdHandler;
+import com.github.jasminb.jsonapi.annotations.Id;
+import com.github.jasminb.jsonapi.annotations.Relationship;
+import com.github.jasminb.jsonapi.annotations.Type;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
+@Type("session")
 public class Session extends RealmObject {
 
     /* Sort criteria */
@@ -17,6 +23,7 @@ public class Session extends RealmObject {
     public static final String START_TIME = "startTime";
 
     @PrimaryKey
+    @Id(IntegerIdHandler.class)
     private int id;
     @Index
     private String title;
@@ -33,13 +40,41 @@ public class Session extends RealmObject {
     private String signupUrl;
     private String state;
     private String level;
-    private SessionType sessionType;
-    private Track track;
-    private Microlocation microlocation;
-    private RealmList<Speaker> speakers;
     @Index
     private String startDate;
     private boolean isBookmarked;
+    @JsonProperty("created-at")
+    private String createdAt;
+    @JsonProperty("deleted-at")
+    private String deletedAt;
+    @JsonProperty("submitted-at")
+    private String submittedAt;
+    @JsonProperty("is-mail-sent")
+    private boolean isMailSent;
+    @Relationship("session-type")
+    private SessionType sessionType;
+    @Relationship("track")
+    private Track track;
+    @Relationship("microlocation")
+    private Microlocation microlocation;
+    @Relationship("speakers")
+    private RealmList<Speaker> speakers;
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public void setSubmittedAt(String submittedAt) {
+        this.submittedAt = submittedAt;
+    }
+
+    public void setMailSent(boolean isMailSent) {
+        this.isMailSent = isMailSent;
+    }
 
     @JsonSetter("session_type")
     public void setSessionType(SessionType sessionType) {
@@ -131,6 +166,22 @@ public class Session extends RealmObject {
         this.signupUrl = signupUrl;
     }
 
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getDeletedAt() {
+        return deletedAt;
+    }
+
+    public String getSubmittedAt() {
+        return submittedAt;
+    }
+
+    public boolean isMailSent() {
+        return isMailSent;
+    }
 
     public Integer getId() {
         return id;
