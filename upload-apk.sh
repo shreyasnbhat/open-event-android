@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_REPO_SLUG" != "fossasia/open-event-android" ]; then
+if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     echo "Just a PR. Skip apk upload."
     exit 0
 fi
@@ -10,8 +10,9 @@ cd $HOME
 git config --global user.email "noreply@travis.com"
 git config --global user.name "Travis-CI"
   
-git clone --quiet --branch=apk https://the-dagger:$GITHUB_API_KEY@github.com/fossasia/open-event-android  apk > /dev/null
+git clone --quiet --branch=apk https://shreyasnbhat:$GITHUB_API_KEY@github.com/shreyasnbhat/open-event-android  apk > /dev/null
 cd apk
+ls -l
 rm -rf *.apk
 cp -Rf $HOME/daily/*  ./
 
