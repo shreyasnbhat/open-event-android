@@ -14,6 +14,7 @@ git clone --quiet --branch=apk https://shreyasnbhat:$GITHUB_API_KEY@github.com/s
 cd apk
 ls -l
 rm -rf *.apk
+ls -l
 cp -Rf $HOME/daily/*  ./
 
 mv fossasia17-fdroid.apk sample-apk-fossasia17-${TRAVIS_BRANCH}.apk
@@ -29,6 +30,7 @@ git checkout --orphan latest-apk-only
 
 # Add generated APKs
 git add -f .
+git status
 git commit -m "Update Sample Apks generated from $TRAVIS_BRANCH branch."
 
 # Delete current apk branch
